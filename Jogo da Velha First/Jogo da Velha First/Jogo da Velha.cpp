@@ -43,23 +43,32 @@ ___|___|___
 		if (turncount % 2 != 0)
 		{
 			turn = 'X';
-			std::cout << "It's X's turn:" << std::endl; // Quebra de linha
+			std::cout << "\nIt's X's turn:" << std::endl;
 		}
 		else
 		{
 			turn = 'O';
-			std::cout << "It's O's turn:" << std::endl;
+			std::cout << "\nIt's O's turn:" << std::endl;		
 		}
 	}
 
-	void Assign() // Impedir casa repetida = jogada inválida
+	void Assign()
 	{
-		std::cin >> input;
-		--input;
-		board[input / 3][input % 3] = turn;
+		bool validplay = false;
+		while (validplay == false)
+		{
+			std::cin >> input;
+			--input;
+			if (board[input / 3][input % 3] == '_')
+			{
+				board[input / 3][input % 3] = turn;
+				validplay = true;
+			}
+			else { std::cout << "This play has already been done. Choose a new space.\n" << std::endl; }
+		}
 	}
 
-	void CheckWin()
+	void CheckWin() // Verificar por quê em formato de L tá dando vitória ex. 0,1 ; 1,0 e 1,1
 	{
 		if(turncount > 4)
 		{
@@ -68,7 +77,7 @@ ___|___|___
 				if (board[x][0] == board[x][1] && board[x][0] == board[x][2])
 				{
 					WinCond = true;
-					std::cout << "The " << turn << " is the winner!" << std::endl;
+					std::cout << "The " << turn << " is the winner!\n" << std::endl;
 					return;
 				}
 			}
@@ -77,20 +86,20 @@ ___|___|___
 				if (board[0][y] == board[1][y] && board[0][y] == board[2][y])
 				{
 					WinCond = true;
-					std::cout << "The " << turn << " is the winner!" << std::endl;
+					std::cout << "The " << turn << " is the winner!\n" << std::endl;
 					return;
 				}
 			}
-			if ((board[0][0] == board[1][1] && board[0][0] == board[2][2]) || (board[0][2] == board[1][1] && board[1][1] == board[2][0]))
+			if ((board[0][0] == board[1][1] && board[0][0] == board[2][2]) || (board[0][2] == board[1][1] && board[0][2] == board[2][0]))
 			{
 				WinCond = true;
-				std::cout << "The " << turn << " is the winner!" << std::endl;
+				std::cout << "The " << turn << " is the winner!\n" << std::endl;
 				return;
 			}
 			if (turncount == 9)
 			{
 				WinCond = true;
-				std::cout << "It's a draw!" << std::endl;
+				std::cout << "It's a draw!\n" << std::endl;
 				return;
 			}
 		}
@@ -122,13 +131,25 @@ int main()
 		std::cout << "\nYou can choose where to assign your symbol by pressing the respective number on your keyboard." << std::endl;
 		std::cout << "Now, X goes first. Type in the respective number for your intended play:" << std::endl;
 		g.Play();
-		char choice; // rever as possibilidades de resposta
-		std::cout << "\nDo you want to play one more? Y/N" << std::endl; 
-		std::cin >> choice;
-		if (choice == 'N') { InitGame = false; } 
-		else { std::cout << "Okay, let's play one more!" << std::endl; }
+		char choice = 'b';
+		std::cout << "Do you want to play one more? Y/N\n" << std::endl; 
+		while (choice !='N' && choice !='n' && choice !='Y' && choice !='y')
+		{
+			std::cin >> choice;
+			if (choice == 'N' || choice == 'n') 
+			{ 
+				std::cout << "Thank you for playing! " << (char)0x03 << "\n";
+				InitGame = false;				
+			}
+			else if (choice == 'Y' || choice == 'y')
+			{
+				std::cout << "\Okay, let's play one more!\n" << std::endl;
+			}
+			else
+			std::cout << "Please, type one of the valid responses:\n Do you want to play again? Y/N" << std::endl;
+		}
 	}
-	std::cout << "Thank you for playing! " << (char)0x03;
+	
 	std::cin.get();
 
 
