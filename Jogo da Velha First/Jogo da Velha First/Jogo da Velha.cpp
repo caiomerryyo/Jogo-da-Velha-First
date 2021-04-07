@@ -74,7 +74,7 @@ ___|___|___
 		{
 			for (int x = 0; x < 3; x++)
 			{
-				if (board[x][0] == board[x][1] && board[x][0] == board[x][2])
+				if (board[x][0] == board[x][1] && board[x][0] == board[x][2] && board[x][0] != '_')
 				{
 					WinCond = true;
 					std::cout << "The " << turn << " is the winner!\n" << std::endl;
@@ -83,14 +83,14 @@ ___|___|___
 			}
 			for (int y = 0; y < 3; y++)
 			{
-				if (board[0][y] == board[1][y] && board[0][y] == board[2][y])
+				if (board[0][y] == board[1][y] && board[0][y] == board[2][y] && board[0][y] != '_')
 				{
 					WinCond = true;
 					std::cout << "The " << turn << " is the winner!\n" << std::endl;
 					return;
 				}
 			}
-			if ((board[0][0] == board[1][1] && board[0][0] == board[2][2]) || (board[0][2] == board[1][1] && board[0][2] == board[2][0]))
+			if ((board[0][0] == board[1][1] && board[0][0] == board[2][2]) && board[0][0] != '_' || (board[0][2] == board[1][1] && board[0][2] == board[2][0] && board [0][2] != '_'))
 			{
 				WinCond = true;
 				std::cout << "The " << turn << " is the winner!\n" << std::endl;
